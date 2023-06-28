@@ -1,0 +1,21 @@
+version: "3.7"
+services:
+
+  nginx_redirect:
+    image: nginx
+    restart: always
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=frontend
+      - traefik.http.routers.nginx_redirect.rule=Host(`zotprojet.re`)
+      - traefik.http.routers.nginx_redirect.tls.certresolver=myresolver
+    networks:
+      - frontend
+
+networks:
+  frontend:
+    external: true
+
+
